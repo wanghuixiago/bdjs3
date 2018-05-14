@@ -35,49 +35,62 @@
 
 </div>
 <script>
-
+    var section=document.getElementById("news-normal");
     function getAllListItem() {
-        var lis=document.querySelectorAll("li");
-        console.log(lis);
+        return document.querySelectorAll("li");
     }
-    getAllListItem();
     function findAllHtmlSpanInOneSection(sectionId) {
         // 返回某个section下所有span中内容为HTML的span标签
-        var ID=document.getElementById(sectionId);
-        x = ID.getElementsByTagName("span");
-        for(i=0;i<x.length;i++)
-            if(x[i].innerHTML==="HTML"){
-                console.log(x);
-            }
+     
+        var result=[];
+        x = section.getElementsByTagName("span");
+        for(var i=0;i<x.length;i++) {
+            if (x[i].innerHTML === "HTML") {
+                result.push(x[i]);
+            };
+        };
+        return result;
+
     }
-    findAllHtmlSpanInOneSection("news-normal");
+
 
     function findListItem(sectionId, spanCont) {
         // 返回某个section下，所有所包含span内容为spanCont的LI标签
-        var ID=document.getElementById(sectionId);
-        x = ID.getElementsByTagName("span");
-        for(i=0;i<x.length;i++)
-            if(x[i].innerHTML==="spanCont") {
-                console.log(x[i].parentNode);
-            }
+
+        var result=[];
+        x = sectionId.querySelectorAll("li");
+        for(var i=0;i<x.length;i++) {
+
+            var sp = x[i].querySelectorAll("span");
+            for (var j = 0; j < sp.length; j++) {
+                if (sp[j].innerHTML === spanCont) {
+                    result.push(x[i]);
+                };
+            };
+        };
+        return result;
 
     }
-    findListItem("news-normal", "HTML");
+
 
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
-        var ID=document.getElementById(sectionId);
 
-        x = ID.querySelectorAll(".active");
+           var result=[];
 
-        console.log(x);
-        for(i=0;i<=x.length;i++) {
-            console.log(x.childNodes);
-        }
+            var links = sectionId.querySelectorAll("a");
+        for(var i = 0;i<links.length;i++){
+            if(links[i].className === 'active'){
+                return links[i].innerHTML;
+            };
+        };
 
 
     }
-    getActiveLinkContent("news-top");
+    console.log(getAllListItem());
+    console.log(findAllHtmlSpanInOneSection(section));
+    console.log(findListItem(section, "HTML"));
+    console.log(getActiveLinkContent(section));
 
 </script>
 </body>
